@@ -1,22 +1,30 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { Profile } from '../profile/profile';
+import { EventCreate } from '../event-create/event-create';
+import { EventList } from '../event-list/event-list';
 
-/*
-  Generated class for the Home page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html'
+  templateUrl: 'home.html',
 })
 export class Home {
-
-  constructor(public navCtrl: NavController) {}
-
-  ionViewDidLoad() {
-    console.log('Hello Home Page');
+  constructor(public nav: NavController) {
+    this.nav = nav;
   }
+
+  goToProfile(){
+    this.nav.push(Profile);
+  }
+
+  goToCreate(){
+    this.nav.push(EventCreate);
+  }
+
+  goToList(){
+    this.nav.push(EventList);
+  }
+
+
 
 }

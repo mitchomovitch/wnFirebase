@@ -1,48 +1,50 @@
-import { Login } from './../pages/login/login';
 import { Home } from './../pages/home/home';
-import { Component, ViewChild } from '@angular/core';
-
-import { Platform, MenuController, Nav } from 'ionic-angular';
-
+import { Login } from './../pages/login/login';
+import { Component } from '@angular/core';
+import { Platform} from 'ionic-angular';
 import { StatusBar } from 'ionic-native';
+import firebase from 'firebase';
 
 
 
 @Component({
-  templateUrl: 'app.html'
+  template: `<ion-nav [root]="rootPage"></ion-nav>`
 })
+
 export class MyApp {
-  @ViewChild(Nav) nav: Nav;
 
   // make HelloIonicPage the root (or first) page
-  rootPage: any = Home;
-  pages: Array<{title: string, component: any}>;
+  rootPage:any=Login;
 
   constructor(
-    public platform: Platform,
-    public menu: MenuController
+    public platform: Platform
   ) {
-    this.initializeApp();
+    firebase.initializeApp({
+      apiKey: "AIzaSyCJm4-qfygYlGoguBOrZKykn4uMdkGmMJc",
+      authDomain: "winenotes-8a11d.firebaseapp.com",
+      databaseURL: "https://winenotes-8a11d.firebaseio.com",
+      storageBucket: "winenotes-8a11d.appspot.com",
+      messagingSenderId: "228384882730"
+    });
 
-    // set our app's pages
-    this.pages = [
-      { title: 'Accueil', component: Home },
-      { title: 'Login', component: Login }
-    ];
-  }
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        //console.log(JSON.stringify(user));
+        this.rootPage = Home;
+        console.log("I'm here! HomePage");
+      } else {
+        this.rootPage = Login;
+        console.log("I'm here! LoginPage");
+      }
+    });
 
-  initializeApp() {
-    this.platform.ready().then(() => {
+    platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       StatusBar.styleDefault();
     });
-  }
 
-  openPage(page) {
-    // close the menu when clicking a link from the menu
-    this.menu.close();
-    // navigate to the new page if it is not the current page
-    this.nav.setRoot(page.component);
+    //this.nav.setRoot(this.rootPage);
   }
+  
 }

@@ -12,8 +12,8 @@ import { EventCreate } from './../pages/event-create/event-create';
 import { Home } from './../pages/home/home';
 
 // Import providers
-import { AuthData } from '../providers/auth-data';
-import { EventData } from '../providers/event-data';
+import { Auth } from '../providers/auth-data';
+import { Event } from '../providers/event-data';
 import { ProfileData } from '../providers/profile-data';
 
 @NgModule({
@@ -43,8 +43,8 @@ import { ProfileData } from '../providers/profile-data';
     ResetPassword,
     Signup
   ],
-  providers: [AuthData,
-    EventData,
+  providers: [Auth,
+    Event,
     ProfileData]
 })
 export class AppModule {}
